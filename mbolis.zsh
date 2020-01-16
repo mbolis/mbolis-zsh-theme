@@ -2,17 +2,17 @@
 # 
 
 # Handle root user
-local main_color=40
-local path_color=34
+main_color=40
+path_color=34
 if [[ "$UID" == "0" ]] ; then
     main_color=203
     path_color=167
 fi
 
 # PROMPT
-local user_host="%F{$main_color}%B%n@%m%b"
-local pwd="%F{$path_color}%~%f"
-local jobs='%(1j. %F{67}⦗%F{103}⚙ %F{116}%j%F{67}⦘%f.)'
+user_host="%F{$main_color}%B%n@%m%b"
+pwd="%F{$path_color}%~%f"
+jobs='%(1j. %F{67}⦗%F{103}⚙ %F{116}%j%F{67}⦘%f.)'
 
 function jenv_prompt () {
 	if [[ "$JENV_LOADED" -eq "1" ]] ; then
