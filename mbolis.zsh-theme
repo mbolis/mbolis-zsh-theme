@@ -17,12 +17,29 @@ local user_host="%F{$main_color}%B%n@%m%b"
 local pwd="%F{$path_color}%~%f"
 local jobs='%(1j. %F{67}⦗%F{103}⚙ %F{116}%j%F{67}⦘%f.)'
 
+function jenv_prompt () {
+	if [[ "$JENV_LOADED" -eq "1" ]] ; then
+		local jenv_version=$(jenv version-name 2>/dev/null)
+		if [[ "$jenv_version" != "system" ]] ; then
+			local jenv_origin="$(jenv version-origin 2>/dev/null)"
+			if [[ "$jenv_origin" = "$JENV_ROOT/version" ]] ; then
+				jenv_origin=
+			elif [[ "$jenv_origin" =~ ".*\\.java-version$" ]] ; then
+				jenv_origin='%F{167}%B.%b%F{95}/'
+			else
+				jenv_origin='%F{178}$'
+			fi
+			echo " %F{69}(${jenv_origin}%F{167}jdk%F{69}:%F{117}${jenv_version}%F{69})%f"
+		fi
+	fi
+}
+
 # Prompt char: either add `status` visual clue or `ignore`
 prompt_char_status="%(?.%F{$main_color}.%F{196}%S)%B%(!.#.$)%b%s%f"
 prompt_char_ignore="%F{$main_color}%B%(!.#.$)%b%f"
 prompt_char=$prompt_char_status
 
-PROMPT='%{%f%b%k%s%}${user_host} ${pwd}$(git_prompt_info)${jobs} ${prompt_char} '
+PROMPT='%{%f%b%k%s%}${user_host} ${pwd}$(git_prompt_info)${jobs}$(jenv_prompt) ${prompt_char} '
 
 # RPROMPT
 
@@ -63,6 +80,6 @@ RPROMPT2='< %F{248}${${(%)reverse_parser_status}// /" %f|%F{248} "}%f'
 ZSH_THEME_GIT_PROMPT_PREFIX=" %F{69}(%F{167}git%F{69}:%F{117}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%F{69})%f"
 ZSH_THEME_GIT_PROMPT_DIRTY="%F{208}%B*%b%f"
-ZSH_THEME_GIT_PROMPT_CLEAN=" "
+ZSH_THEME_GIT_PROMPT_CLEAN=
 ZSH_THEME_GIT_PROMPT_SHA_BEFORE=' %F{69}[%F{117}'
 ZSH_THEME_GIT_PROMPT_SHA_AFTER='%F{69}]%f'
