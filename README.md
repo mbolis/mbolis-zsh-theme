@@ -22,7 +22,7 @@ A custom theme for [Oh my ZSH](https://github.com/ohmyzsh/ohmyzsh).
 
 ![Screenshot showing features](screenshot.png)
 
-## Compatibility
+## Installation
 
 * Vanilla [Oh my ZSH](https://github.com/ohmyzsh/ohmyzsh)  
 ```
